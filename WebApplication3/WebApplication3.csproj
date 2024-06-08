@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\lib\imgs\anima2.webm" />
+    <None Include="wwwroot\lib\imgs\photo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bootstrap" Version="3.3.7" />
   </ItemGroup>
 
