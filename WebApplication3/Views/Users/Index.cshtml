@@ -8,11 +8,11 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="text-decoration-none bg-primary p-1 text-white rounded-2">+ Create New</a>
 </p>
-<table class="table">
+<table class="table border-1 rounded-3 shadow-lg">
     <thead>
-        <tr>
+        <tr class="bg-warning">
             <th>
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
@@ -38,9 +38,9 @@
                 @Html.DisplayFor(modelItem => item.Password)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="bg-primary text-white border-0 rounded-2 p-1 text-decoration-none">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="bg-success text-white border-0 rounded-2 p-1 text-decoration-none">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="bg-danger text-white border-0 rounded-2 p-1 text-decoration-none">Delete</a>
             </td>
         </tr>
 }
