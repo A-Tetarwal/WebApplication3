@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebApplication3.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
 {
@@ -17,13 +20,15 @@ namespace WebApplication3.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users.ToListAsync());
+            return _context.Users != null ?
+                       View(await _context.Users.ToListAsync()) :
+                       Problem("Entity set 'ApplicationDbContext.Users'  is null.");
         }
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Users == null)
             {
                 return NotFound();
             }
@@ -61,7 +66,7 @@ namespace WebApplication3.Controllers
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Users == null)
             {
                 return NotFound();
             }
@@ -110,7 +115,7 @@ namespace WebApplication3.Controllers
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Users == null)
             {
                 return NotFound();
             }
@@ -130,15 +135,23 @@ namespace WebApplication3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (_context.Users == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Users'  is null.");
+            }
             var user = await _context.Users.FindAsync(id);
-            _context.Users.Remove(user);
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UserExists(int id)
         {
-            return _context.Users.Any(e => e.Id == id);
+            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
